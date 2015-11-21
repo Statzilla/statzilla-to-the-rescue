@@ -11,7 +11,7 @@ var PLAYER_HEIGHT = 50;
 
 // The player and its settings
 function createPlayer() {
-    player = game.add.sprite(PLAYER_WIDTH + 10, 0, 'dino');
+    player = game.add.sprite(0, 0, 'dino');
     game.physics.arcade.enable(player); // We need to enable physics on the player
 
     //  Player physics properties
