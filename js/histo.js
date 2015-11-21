@@ -36,9 +36,25 @@ function createHisto(randCoordX, speed) {
 
     var randColor = Math.floor(Math.random() * 7);
     var histo = histoLayer.create(randCoordX, randCoordY, 'histo' + randColor);
+    game.physics.arcade.enable(histo); 
     histo.scale.setTo(1, randFloor*2);
     histo.body.immovable = true;
     histo.body.velocity.set(-speed, 0);
-    
+    histo.body.bounce.y  = 0;
     return histo;
+}
+
+function updateHistoPerTick() {
+
+    histoLayer.forEach(function(item) {
+
+        // game.physics.arcade.collide(player, item);
+        if (Phaser.Rectangle.intersects(player.getBounds(), item.getBounds())) {
+            var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+            item.body.velocity.set(500, plusOrMinus*500);
+            item.alpha = 1;
+            game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+        }
+    });
+
 }

@@ -17,7 +17,7 @@ function createPlayer() {
     //  Player physics properties
     player.body.bounce.y = 0;
     player.body.gravity.y = 1000;
-    player.body.collideWorldBounds = true;
+    player.body.collideWorldBounds = false;
     // player.body.immovable = true;
     //  Animations, walking left and right.
     player.animations.add('right', [0, 1, 2, 3], 10, true);
@@ -30,7 +30,7 @@ function flipGravity() {
     new_y = ground.body.position.y - 25;
   } else {
     new_y = ground.body.position.y + 25;
-    player.anchor.setTo(0.5, 0.5);
+    player.anchor.setTo(0, 0.5);
   }
   player.reset(player.body.position.x, new_y);
   player.scale.y *= -1; // зеркально отобразить спрайт относительно y
