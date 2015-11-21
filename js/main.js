@@ -62,9 +62,9 @@ function flipGravity() {
   player.body.gravity.y = -player.body.gravity.y; 
   var new_y = 0;
   if (player.body.gravity.y > 0) {
-    new_y = ground.body.position.y - 100;
+    new_y = ground.body.position.y - 200;
   } else {
-    new_y = ground.body.position.y + 100;
+    new_y = ground.body.position.y + 200;
   }
   player.reset(player.body.position.x, new_y);
   console.log("Y after gravity flip: " + player.body.position.y);
@@ -74,12 +74,11 @@ function flipGravity() {
 //  The platforms group contains the ground
 function createPlatforms() {
   platforms = game.add.group();
-  platforms.enableBody = true; //  We will enable physics for any object that is created in this group
+  platforms.enableBody = true;
   ground = 
-    platforms.create(0, game.world.height / 2, 'ground'); // Here we create the ground. 
-  ground.scale.setTo(2, 1); //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-  // ground.scale(GROUND_WIDTH, GROUND_HEIGHT)
-  ground.body.immovable = true; //  This stops it from falling away when you jump on it
+    platforms.create(0, game.world.height / 2, 'ground');
+  ground.scale.setTo(2, 0.1);
+  ground.body.immovable = true; 
 }
 
 // A simple background for our game
