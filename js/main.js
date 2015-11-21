@@ -6,7 +6,7 @@ function PRELOAD() {
     for (var i = 0; i < 7; i++) {
         game.load.image('histo' + i, 'assets/histo' + i + '.svg');
     }
-    game.load.spritesheet('dino', 'assets/dinosprite.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
+    game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
 }
 
 function CREATE() {
