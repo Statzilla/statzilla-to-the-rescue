@@ -5,6 +5,7 @@ var MONSTER_UPDATE_TIME = 64;
 var MONSTER_SPAWN_CHANCE = 0.11;
 var LEVEL_SPEED = 200;
 var MONSTER_SPAWN_HEIGHT = 32;
+var MONSTER_KNOCK_OUT_POWER = 64;
 
 var monsters = new Array();
 var monstersTimer;
@@ -30,8 +31,6 @@ function updateMonstersPerTick() {
   });
 }
 
-
-
 function monsterDeathAnimationSplat(monster) {
   monster.scale.y = 0.3;
   monster.scale.x = 1.7;
@@ -43,15 +42,14 @@ function monsterDeathAnimationSplat(monster) {
 }
 
 function monsterDeathAnimationFall(monster) {
+    monster.body.velocity.x = MONSTER_KNOCK_OUT_POWER;
     monster.fadeoutAndDestroy(600);
 }
-
 
 function createMonster() {
   monster = game.add.sprite(game.world.width - 10, 
                             game.world.height / 2 - MONSTER_SPAWN_HEIGHT, 
                             'monster');
-
   game.physics.arcade.enable(monster); 
   monster.body.bounce.y  = 0;
   monster.body.gravity.y = 1000;
@@ -94,7 +92,6 @@ function createMonster() {
 
   return monster;
 }
-
 
 function updateMonster(monster) {
   if (monster.dead)
