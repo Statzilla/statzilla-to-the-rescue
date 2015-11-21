@@ -17,7 +17,7 @@ var spacebar;
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { 
   preload: function() {
     game.load.image('sky', 'assets/sky.png');
-    game.load.image('ground', 'assets/platform.png');
+    game.load.image('ground', 'assets/ox.png');
     game.load.spritesheet('dino', 'assets/dinosprite.png', 
                           PLAYER_WIDTH, PLAYER_HEIGHT); 
   }, 
@@ -60,7 +60,7 @@ function createPlatforms() {
   platforms.enableBody = true; //  We will enable physics for any object that is created in this group
 
   var ground = platforms.create(0, game.world.height / 2, 'ground'); // Here we create the ground. 
-  ground.scale.setTo(2, 1); //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+  //ground.scale.setTo(2, 1); //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
   ground.body.immovable = true; //  This stops it from falling away when you jump on it
 }
 
@@ -85,5 +85,9 @@ function createPlayer() {
 }
 
 function createHisto() {
+  histos = game.add.group();
+  histos.enableBody = true; //  We will enable physics for any object that is created in this group
+
+  var hist = histos.create(50, game.world.height / 2, 'ground'); // Here we create the ground. 
 
 }
