@@ -24,8 +24,6 @@ function createPlayer() {
 }
 
 function flipGravity() {
-  console.log("SPACEBAR pressed: gravity flip");
-  console.log("Y before gravity flip: " + player.body.position.y);
   player.body.gravity.y = -player.body.gravity.y; 
   var new_y = 0;
   if (player.body.gravity.y > 0) {
@@ -35,6 +33,5 @@ function flipGravity() {
     player.anchor.setTo(0.5, 0.5);
   }
   player.reset(player.body.position.x, new_y);
-  console.log("Y after gravity flip: " + player.body.position.y);
   player.scale.y *= -1; // зеркально отобразить спрайт относительно y
 }

@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.WEBGL, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
+var game = new Phaser.Game(window.width, window.height, Phaser.CANVAS, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
 
 function PRELOAD() {
     game.load.image('sky', 'assets/sky.png');
@@ -21,6 +21,7 @@ function CREATE() {
     // Our controls.
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar.onDown.add(flipGravity);
+    game.input.onDown.add(flipGravity);
 }
 
 function UPDATE() {
