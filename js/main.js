@@ -3,7 +3,9 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', {preload: PRELOAD, creat
 function PRELOAD() {
     game.load.image('sky', 'assets/sky.png');
     game.load.image('ground', 'assets/ox.png');
-    game.load.image('histo', 'assets/histo.svg');
+    for (var i = 0; i < 7; i++) {
+        game.load.image('histo' + i, 'assets/histo' + i + '.svg');
+    }
     game.load.spritesheet('dino', 'assets/dinosprite.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
 }
 
@@ -22,9 +24,10 @@ function CREATE() {
 function UPDATE() {
     game.physics.arcade.collide(player, platforms); //Collide player and ground
     player.animations.play('right'); //Constantli "moving" to the right 
+    game.physics.arcade.collide(player, histo, collisionHandler, null, this);
 }
 
 function RENDER() {
     game.debug.cameraInfo(game.camera, 32, 32);
-    game.debug.spriteCoords(player, 32, 500);     
+    game.debug.spriteCoords(player, 32, 500);    
 }
