@@ -54,6 +54,7 @@ function createMonster() {
   monster.body.bounce.y  = 0;
   monster.body.gravity.y = 1000;
   monster.moveDirection = true;
+  monster.tint = Math.floor(Math.random() * 0xFFFFFF); // should be profiled; possible performance drop
   monster.shouldChangeDirection = function() {
     // If player is close, monster will turn back from him
     if (player.position.distance(this.position) < MONSTER_AWARENESS_RANGE) {
