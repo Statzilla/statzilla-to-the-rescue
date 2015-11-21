@@ -3,6 +3,7 @@
 ////////////////////////
 var platforms;
 var spacebar;
+var ground;
 
 
 var ground;
@@ -25,13 +26,6 @@ function createWorld() {
     sky = platforms.create(0, 0, 'sky');
     sky.scale.setTo(1, 1);
     sky.body.immovable = true;
-
-
-    var ground = platforms.create(0, game.world.height / 2, 'ground'); // Here we create the ground. 
-    ground.scale.setTo(1, 1); //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    ground.body.immovable = true; //  This stops it from falling away when you jump on it
-
-
 
     ground = platforms.create(0, game.world.height / 2, 'ground'); // Here we create the ground. 
     ground.scale.setTo(1, 1); //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
@@ -78,8 +72,5 @@ function movingObjects(obj) {
         obj[4 + i*4].body.velocity.set(-50,0)
 
 	}
-
-
 }
-
 
