@@ -24,9 +24,10 @@ function CREATE() {
 function UPDATE() {
     game.physics.arcade.collide(player, platforms); //Collide player and ground
     player.animations.play('right'); //Constantli "moving" to the right 
+    game.physics.arcade.collide(player, histo, collisionHandler, null, this);
 }
 
 function RENDER() {
     game.debug.cameraInfo(game.camera, 32, 32);
-    game.debug.spriteCoords(player, 32, 500);     
+    game.debug.spriteCoords(player, 32, 500);    
 }
