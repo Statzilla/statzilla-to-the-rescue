@@ -12,7 +12,7 @@ function createHistos() {
 
     for (var i = 0; i < numberOfHistos; i++) {
         var minCoordX = 100;
-        var maxCoordX = 200;
+        var maxCoordX = 800;
         var randCoordX = i * (Math.floor(Math.random() * (maxCoordX - minCoordX + 1)) + minCoordX);
         createHisto(randCoordX);
     }
@@ -40,7 +40,7 @@ function createHisto(randCoordX) {
 
     var histo = histoLayer.create(randCoordX, randCoordY, 'histo');
     histo.scale.setTo(1, randFloor);
-    histo.body.immovable = true;
-  
+    game.physics.enable(histo, Phaser.Physics.ARCADE);
+    histo.body.velocity.set(-50, 0);
     return histo;
 }

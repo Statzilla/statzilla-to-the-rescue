@@ -7,7 +7,7 @@ var player;
 // Константы //
 ///////////////
 var PLAYER_WIDTH = 48;
-var PLAYER_HEIGHT = 62;
+var PLAYER_HEIGHT = 50;
 
 // The player and its settings
 function createPlayer() {
@@ -18,10 +18,10 @@ function createPlayer() {
     player.body.bounce.y = 0;
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
-
+    // player.body.immovable = true;
     //  Animations, walking left and right.
-    player.animations.add('left', [4, 5, 6, 7], 10, true);
-    player.animations.add('right', [8, 9, 10, 11], 10, true);
+    player.animations.add('right', [0, 1, 2, 3], 10, true);
+
 }
 
 function flipGravity() {
