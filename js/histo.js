@@ -61,12 +61,11 @@ function updateHistoPerTick() {
         // game.physics.arcade.collide(player, item);
         if (Phaser.Rectangle.intersects(player.getBounds(), item.getBounds()) & !flag) {
             var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-            var plusOrMinus2 = Math.random() < 0.5 ? -1 : 1;
-            item.body.velocity.set(plusOrMinus*500, plusOrMinus2*500);
+            item.body.velocity.set(500, plusOrMinus*500);
             item.alpha = 1;
             game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
             var flag = 1;
-            
+
         }
     });
 
