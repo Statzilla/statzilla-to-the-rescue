@@ -25,6 +25,16 @@ function createPlayer() {
 }
 
 function flipGravity() {
-    player.position.y += PLAYER_HEIGHT;
-    player.body.gravity.y = -player.body.gravity.y; 
+  console.log("SPACEBAR pressed: gravity flip");
+  console.log("Y before gravity flip: " + player.body.position.y);
+  player.body.gravity.y = -player.body.gravity.y; 
+  var new_y = 0;
+  if (player.body.gravity.y > 0) {
+    new_y = ground.body.position.y - 200;
+  } else {
+    new_y = ground.body.position.y + 200;
+  }
+  player.reset(player.body.position.x, new_y);
+  console.log("Y after gravity flip: " + player.body.position.y);
+  player.scale.y *= -1; // зеркально отобразить спрайт относительно y
 }
