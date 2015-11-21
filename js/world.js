@@ -11,7 +11,7 @@ function createWorld() {
     platforms.enableBody = true; //  We will enable physics for any object that is created in this group
 
     var sky = platforms.create(0, 0, 'sky');
-    sky.scale.setTo(3, 1);
+    sky.scale.setTo(1, 1);
     sky.body.immovable = true;
 
     ground = platforms.create(0, game.world.height / 2, 'ground'); // Here we create the ground. 
