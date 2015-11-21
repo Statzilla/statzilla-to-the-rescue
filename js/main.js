@@ -6,12 +6,15 @@ function PRELOAD() {
     game.load.image('histo', 'assets/histo.svg');
     game.load.image('monster', 'assets/human.png');  
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
+    game.load.image('monster', 'assets/human.png');  
+    game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
+    game.load.image('ooops', 'assets/ooops.png');
+
+    game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
 }
 
 function CREATE() {
     game.physics.startSystem(Phaser.Physics.ARCADE); //  We're going to be using physics, so enable the Arcade Physics system
-
-    // this.game.stage.backgroundColor = '#ffffff';
 
     createWorld();
     createPlayer();
@@ -22,6 +25,7 @@ function CREATE() {
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar.onDown.add(flipGravity);
     game.input.onDown.add(flipGravity);
+    timer(); 
 }
 
 function UPDATE() {
@@ -29,7 +33,9 @@ function UPDATE() {
     player.animations.play('right'); //Constantly "moving" to the right 
     updateMonstersPerTick();
     updateHistoPerTick();
+    counterText.text = counter;
 }
 
 function RENDER() {
 }
+
