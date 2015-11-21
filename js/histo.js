@@ -58,11 +58,17 @@ function updateHistoPerTick() {
     histoLayer.forEach(function(item) {
 
         // game.physics.arcade.collide(player, item);
-        if (Phaser.Rectangle.intersects(player.getBounds(), item.getBounds()) & !flag) {
-            var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-            item.body.velocity.set(500, plusOrMinus*500);
-            item.alpha = 1;
-            game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+        if (Phaser.Rectangle.intersects(player.getBounds(), item.getBounds())) {
+            if (item.height <= 50){
+                var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+                item.body.velocity.set(500, plusOrMinus*500);
+                item.alpha = 1;
+                game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+            } else {
+                var ooops = platforms.create(0, 0, 'ooops');
+                ooops.scale.setTo(1, 1);
+                ooops.body.immovable = true;
+            }  
         }
     });
 
