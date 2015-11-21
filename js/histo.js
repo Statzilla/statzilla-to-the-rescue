@@ -55,7 +55,6 @@ function createHisto(randCoordX, speed) {
 
 function updateHistoPerTick() {
 
-    var flag = 0;
     histoLayer.forEach(function(item) {
 
         // game.physics.arcade.collide(player, item);
@@ -64,13 +63,7 @@ function updateHistoPerTick() {
             item.body.velocity.set(500, plusOrMinus*500);
             item.alpha = 1;
             game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
-            var flag = 1;
-
         }
     });
 
-}
-
-function growHisto(){
-    // histoLayer.
 }
