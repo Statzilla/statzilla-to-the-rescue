@@ -18,5 +18,5 @@ function createWorld() {
     ground.scale.setTo(1, 1); //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
     ground.body.immovable = true; //  This stops it from falling away when you jump on it
     ground.body.setSize(800, 1);
-    ground.anchor.setTo(0.5, 0.5);
+    ground.anchor.setTo(0, 0.5);
 }

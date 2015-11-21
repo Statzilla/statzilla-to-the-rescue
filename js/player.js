@@ -21,7 +21,6 @@ function createPlayer() {
     // player.body.immovable = true;
     //  Animations, walking left and right.
     player.animations.add('right', [0, 1, 2, 3], 10, true);
-
 }
 
 function flipGravity() {
