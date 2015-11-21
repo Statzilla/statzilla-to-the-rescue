@@ -3,7 +3,9 @@ var MONSTER_DIRECTION_CHANGE_CHANCE = 0.3;
 var MONSTER_AWARENESS_RANGE = 128;
 var MONSTER_UPDATE_TIME = 64;
 var MONSTER_SPAWN_CHANCE = 0.11;
-var LEVEL_SPEED = 128;
+var LEVEL_SPEED = 200;
+var MONSTER_SPAWN_HEIGHT = 32;
+var MONSTER_KNOCK_OUT_POWER = 64;
 
 var monsters = new Array();
 var monstersTimer;
@@ -29,67 +31,28 @@ function updateMonstersPerTick() {
   });
 }
 
-function removeMonster(monster) {
-  var i = monsters.indexOf(monster);
-  monsters.splice(i, 1);
-  monster.destroy();
-}
-
-function monsterDeathAnimationSplat(monster)
-{
-  var disappearDelay = 1600;
+function monsterDeathAnimationSplat(monster) {
   monster.scale.y = 0.3;
   monster.scale.x = 1.7;
   monster.body.velocity.x = -LEVEL_SPEED;
   monster.body.velocity.y = 0;
   monster.body.immovable = true;
   monster.body.gravity.y = 0;
-  // fade out
-  game.add.tween(monster).to({ alpha: 0 }, 
-                             disappearDelay, 
-                             Phaser.Easing.Linear.None, 
-                             true, 
-                             0, 
-                             1000, // ???
-                             true);
-  timer = game.time.create(false);
-  timer.add(disappearDelay,
-            function() { 
-              removeMonster(monster);
-            });
-  timer.start();
+  monster.fadeoutAndDestroy(1600);
 }
 
 function monsterDeathAnimationFall(monster) {
-  var disappearDelay = 600;
-  // fade out
-  game.add.tween(monster).to({ alpha: 0 }, 
-                             disappearDelay, 
-                             Phaser.Easing.Linear.None, 
-                             true, 
-                             0, 
-                             1000, // ???
-                             true);
-
-  timer = game.time.create(false);
-  timer.add(disappearDelay,
-            function() { 
-              removeMonster(monster);
-            });
-  timer.start();
+    monster.body.velocity.x = MONSTER_KNOCK_OUT_POWER;
+    monster.fadeoutAndDestroy(600);
 }
 
-
 function createMonster() {
-  monster = game.add.sprite(game.world.width / 2, 
-                            0, 
+  monster = game.add.sprite(game.world.width - 10, 
+                            game.world.height / 2 - MONSTER_SPAWN_HEIGHT, 
                             'monster');
-
   game.physics.arcade.enable(monster); 
   monster.body.bounce.y  = 0;
   monster.body.gravity.y = 1000;
-  monster.body.collideWorldBounds = true;
-
   monster.moveDirection = true;
   monster.shouldChangeDirection = function() {
     // If player is close, monster will turn back from him
@@ -105,12 +68,30 @@ function createMonster() {
     this.dead.true;
     animation(this);
   };
+  
+  monster.fadeoutAndDestroy = function(disappearDelay) {
+    game.add.tween(this).to({alpha: 0}, 
+                             disappearDelay, 
+                             Phaser.Easing.Linear.None, 
+                             true, 
+                             0, 
+                             1000, // ???
+                             true);
+    var timer = game.time.create(false);
+    var currentMonster = this;
+    timer.add(disappearDelay,
+              function() { 
+                  var i = monsters.indexOf(currentMonster);
+                  monsters.splice(i, 1);
+                  currentMonster.destroy();
+              });
+    timer.start();
+  };
 
   monsters.push(monster);
 
   return monster;
 }
-
 
 function updateMonster(monster) {
   if (monster.dead)
