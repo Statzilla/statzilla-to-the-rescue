@@ -1,17 +1,17 @@
 var game = new Phaser.Game(window.width, window.height, Phaser.CANVAS, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
 
 function PRELOAD() {
-    game.load.image('sky', 'assets/sky.png');
+    game.load.image('sky', 'assets/back4.jpg');
     game.load.image('ground', 'assets/ox.png');
-    for (var i = 0; i < 7; i++) {
-        game.load.image('histo' + i, 'assets/histo' + i + '.svg');
-    }
-  game.load.image('monster', 'assets/human.png');  
-  game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
+    game.load.image('histo', 'assets/histo.svg');
+    game.load.image('monster', 'assets/human.png');  
+    game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
 }
 
 function CREATE() {
     game.physics.startSystem(Phaser.Physics.ARCADE); //  We're going to be using physics, so enable the Arcade Physics system
+
+    // this.game.stage.backgroundColor = '#ffffff';
 
     createWorld();
     createPlayer();
