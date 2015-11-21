@@ -20,6 +20,15 @@ function createHistos() {
     }
 }
 
+// function getRandomColor() {
+//     var letters = '0123456789ABCDEF'.split('');
+//     var color = '#';
+//     for (var i = 0; i < 6; i++ ) {
+//         color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+// }
+
 function createHisto(randCoordX, speed) {
     var maxFloor = 5;
     var minFloor = 1;
@@ -29,9 +38,9 @@ function createHisto(randCoordX, speed) {
     var coordY = game.world.height / 2;
     var randCoordY;
     if (randDirection === 0) {
-        randCoordY = coordY;
+        randCoordY = coordY + 11;
     } else {
-        randCoordY = coordY - randFloor*20;
+        randCoordY = coordY - randFloor*20 + 8;
     }
 
     var randColor = Math.floor(Math.random() * 7);
@@ -39,6 +48,6 @@ function createHisto(randCoordX, speed) {
     histo.scale.setTo(1, randFloor*2);
     histo.body.immovable = true;
     histo.body.velocity.set(-speed, 0);
-    
+  
     return histo;
 }

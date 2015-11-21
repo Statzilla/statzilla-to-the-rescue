@@ -11,7 +11,7 @@ var PLAYER_HEIGHT = 50;
 
 // The player and its settings
 function createPlayer() {
-    player = game.add.sprite(0, 0, 'dino');
+    player = game.add.sprite(PLAYER_WIDTH + 10, 0, 'dino');
     game.physics.arcade.enable(player); // We need to enable physics on the player
 
     //  Player physics properties
@@ -21,6 +21,7 @@ function createPlayer() {
     // player.body.immovable = true;
     //  Animations, walking left and right.
     player.animations.add('right', [0, 1, 2, 3], 10, true);
+
 }
 
 function flipGravity() {
@@ -29,10 +30,9 @@ function flipGravity() {
   player.body.gravity.y = -player.body.gravity.y; 
   var new_y = 0;
   if (player.body.gravity.y > 0) {
-    new_y = ground.body.position.y - 25;
+    new_y = ground.body.position.y - 200;
   } else {
-    new_y = ground.body.position.y + 25;
-    player.anchor.setTo(0.5, 0.5);
+    new_y = ground.body.position.y + 200;
   }
   player.reset(player.body.position.x, new_y);
   console.log("Y after gravity flip: " + player.body.position.y);
