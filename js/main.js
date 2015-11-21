@@ -26,8 +26,8 @@ function CREATE() {
 function UPDATE() {
     game.physics.arcade.collide(player, platforms); //Collide player and ground
     player.animations.play('right'); //Constantly "moving" to the right 
-    game.physics.arcade.collide(player, histo, collisionHandler, null, this);
     updateMonstersPerTick();
+    updateHistoPerTick();
 }
 
 function RENDER() {

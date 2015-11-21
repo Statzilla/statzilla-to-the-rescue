@@ -17,7 +17,7 @@ function createPlayer() {
     //  Player physics properties
     player.body.bounce.y = 0;
     player.body.gravity.y = 1000;
-    player.body.collideWorldBounds = true;
+    player.body.collideWorldBounds = false;
     // player.body.immovable = true;
     //  Animations, walking left and right.
     player.animations.add('right', [0, 1, 2, 3], 10, true);
