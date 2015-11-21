@@ -8,7 +8,7 @@ function timer() {
     timer.loop(timeStep, updateCounter);
     timer.start();
 
-    counterText = game.add.bitmapText(200, 100, 'carrier_command', 'Hi!', 64);
+    counterText = game.add.bitmapText(0, 0, 'carrier_command', 'Hi!', 64);
 }
 
 function updateCounter() {
