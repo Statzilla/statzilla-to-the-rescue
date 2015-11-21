@@ -38,9 +38,9 @@ function createHisto(randCoordX, speed) {
     var coordY = game.world.height / 2;
     var randCoordY;
     if (randDirection === 0) {
-        randCoordY = coordY + 11;
+        randCoordY = coordY;
     } else {
-        randCoordY = coordY - randFloor*20 + 8;
+        randCoordY = coordY - randFloor*20;
     }
 
     var randColor = Math.floor(Math.random() * 7);
@@ -48,6 +48,6 @@ function createHisto(randCoordX, speed) {
     histo.scale.setTo(1, randFloor*2);
     histo.body.immovable = true;
     histo.body.velocity.set(-speed, 0);
-  
+    
     return histo;
 }

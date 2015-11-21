@@ -30,9 +30,10 @@ function flipGravity() {
   player.body.gravity.y = -player.body.gravity.y; 
   var new_y = 0;
   if (player.body.gravity.y > 0) {
-    new_y = ground.body.position.y - 200;
+    new_y = ground.body.position.y - 25;
   } else {
-    new_y = ground.body.position.y + 200;
+    new_y = ground.body.position.y + 25;
+    player.anchor.setTo(0.5, 0.5);
   }
   player.reset(player.body.position.x, new_y);
   console.log("Y after gravity flip: " + player.body.position.y);

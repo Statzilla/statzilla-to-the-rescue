@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
+var game = new Phaser.Game(800, 600, Phaser.WEBGL, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
 
 function PRELOAD() {
     game.load.image('sky', 'assets/sky.png');
@@ -31,6 +31,4 @@ function UPDATE() {
 }
 
 function RENDER() {
-    game.debug.cameraInfo(game.camera, 32, 32);
-    game.debug.spriteCoords(player, 32, 500);    
 }
