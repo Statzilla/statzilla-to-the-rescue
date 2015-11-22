@@ -17,14 +17,11 @@ function createHistos() {
     histosSpawnTimer = game.time.create(false);
     histosSpawnTimer.loop(HISTOS_SPAWN_TRIAL_RATE, 
                           function() {
-                              histoLayer.forEach(function(histo) {
-                                     histo.body.velocity.x = -LEVEL_SPEED;
-                                  });
                               if (Math.random() < HISTOS_SPAWN_CHANCE) {
                                   createHisto(game.world.width, LEVEL_SPEED);
                               }
                               increaseLevelSpeed();
-                              histosSpawnTimer.events[0].delay = HISTOS_SPAWN_TRIAL_RATE + Math.floor(Math.random() * 100);
+                              histosSpawnTimer.events[0].delay = HISTOS_SPAWN_TRIAL_RATE + Math.floor(Math.random() * 500);
                           }, 
                           this);
     histosSpawnTimer.start();
@@ -32,9 +29,13 @@ function createHistos() {
 
 function increaseLevelSpeed() {
     LEVEL_SPEED += LEVEL_SPEED_INCREASE;
+    histoLayer.forEach(function(histo) {
+         histo.body.velocity.x = -LEVEL_SPEED;
+      });
 }
 
 function stopSpawningHistos() {
+    histosSpawnTimer.events = [];
     histosSpawnTimer.destroy();
 }
 
@@ -93,14 +94,7 @@ function updateHistoPerTick() {
                           });
                 timerplusText.start();
             } else {
-                var ooops = platforms.create(0, 0, 'ooops');
-                ooops.scale.setTo(1, 1);
-                ooops.body.immovable = true;
-                timer.stop();
-                player.animations.stop(null, true);
-                histoLayer.forEach(function(item) {
-                item.body.velocity.set(0, 0);
-                });
+                endGame();
             }  
         }
     });
@@ -121,7 +115,10 @@ function histoGrow(increase) {
 }
 
 function endGame() {
-    sky = platforms.create(0, 0, 'ooops');
+    
+    var ooops = platforms.create(0, 0, 'ooops');
+    ooops.scale.setTo(1, 1);
+    ooops.body.immovable = true;
     ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
     timer.stop();
     player.animations.stop(null, true);
