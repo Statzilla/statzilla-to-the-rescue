@@ -61,7 +61,7 @@ function createMonster() {
   monster.moveDirection = true;
   monster.scale.y = 0.6 + Math.random() * 0.8;
   monster.animations.add('runr', [0, 1], 10, true);
-  monster.tint = Math.floor(Math.random() * 0xFFFFFF); // should be profiled; possible performance drop
+  monster.tint = COLORS[Math.floor(Math.random() * COLORS.length)];
   monster.shouldChangeDirection = function() {
     // If player is close, monster will turn back from him
     if (player.position.distance(this.position) < MONSTER_AWARENESS_RANGE) {
