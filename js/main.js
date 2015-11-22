@@ -1,4 +1,13 @@
-if ( /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent) ) {
+function isiPhone(){
+    return (
+        //Detect iPhone
+        (navigator.platform.indexOf("iPhone") != -1) ||
+        //Detect iPod
+        (navigator.platform.indexOf("iPod") != -1)
+    );
+}
+
+if (isiPhone()){
     var Phasertype = 'Phaser.CANVAS';
 } else {
     var Phasertype = 'Phaser.WEBGL';
