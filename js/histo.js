@@ -7,6 +7,7 @@ var HISTOS_SPAWN_CHANCE = 1.0;
 var HISTOS_SPAWN_TRIAL_RATE = 512;
 var HISTO_WIDTH = 40;
 var histosSpawnTimer;
+var histoLayer;
 
 function createHistos() {
     var numberOfHistos = 100;
@@ -16,22 +17,21 @@ function createHistos() {
     histosSpawnTimer = game.time.create(false);
     histosSpawnTimer.loop(HISTOS_SPAWN_TRIAL_RATE, 
                           function() {
+                              histoLayer.forEach(function(histo) {
+                                     histo.body.velocity.x = -LEVEL_SPEED;
+                                  });
                               if (Math.random() < HISTOS_SPAWN_CHANCE) {
                                   createHisto(game.world.width, LEVEL_SPEED);
                               }
+                              increaseLevelSpeed();
+                              histosSpawnTimer.events[0].delay = HISTOS_SPAWN_TRIAL_RATE + Math.floor(Math.random() * 100);
                           }, 
                           this);
     histosSpawnTimer.start();
+}
 
-    
-    // for (var i = 0; i < numberOfHistos; i++) {
-    //     var minCoordX = 50;
-    //     var maxCoordX = 150;
-    //     var randCoordX = 400 + i*200 + Math.floor(Math.random() * (maxCoordX - minCoordX + 1)) + minCoordX;
-    //     var speed = 200;
-        
-    //     createHisto(randCoordX, speed);
-    // }
+function increaseLevelSpeed() {
+    LEVEL_SPEED += LEVEL_SPEED_INCREASE;
 }
 
 function stopSpawningHistos() {
@@ -58,7 +58,7 @@ function createHisto(randCoordX, speed) {
     histo.scale.setTo(1, randFloor*2);
     histo.body.immovable = true;
     histo.body.velocity.set(-speed, 0);
-    histo.body.bounce.y  = 0;
+    histo.body.bounce.y = 0;
 
     var color = COLORS[Math.floor(Math.random() * COLORS.length)];
     histo.tint = color;
