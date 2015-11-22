@@ -1,87 +1,67 @@
+if( navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+){
+    var Phasertype = Phaser.CANVAS;
+}
+else {
+    var Phasertype = Phaser.WEBGL;
+}
 
-///////////////
-// Константы //
-///////////////
+var game = new Phaser.Game(800, 600, Phasertype, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
 
-var PLAYER_WIDTH = 48;
-var PLAYER_HEIGHT = 62;
+var music;
+var text;
 
-////////////////////////
-// Глобальные объекты //
-////////////////////////
-var player;
-var platforms;
-var spacebar;
+function PRELOAD() {
+    game.load.image('sky', 'assets/back4.jpg');
+    game.load.image('ground', 'assets/ox.png');
+    game.load.image('histo', 'assets/histo.svg');
+    game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
+    game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  
+    game.load.image('ooops', 'assets/ooops.png');
+    // game.load.audio('music', ['assets/music.mp3']);
 
+    for (var i = 1; i < 15; i++) {
+        game.load.image('obj' + i, 'assets/obj' + i + '.png');
+    }
+    game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
+}
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { 
-  preload: function() {
-    game.load.image('sky', 'assets/sky.png');
-    game.load.image('ground', 'assets/platform.png');
-    game.load.spritesheet('dino', 'assets/dinosprite.png', 
-                          PLAYER_WIDTH, PLAYER_HEIGHT); 
-  }, 
-  create: function() {
-    //  We're going to be using physics, so enable the Arcade Physics system
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    
-    createSky();
-    createPlatforms();
+function CREATE() {
+    game.physics.startSystem(Phaser.Physics.ARCADE); //  We're going to be using physics, so enable the Arcade Physics system
+
+    // music = game.add.audio('music');
+    // music.play();
+
+    createWorld();
     createPlayer();
-
+    createHistos(); 
+    createMonsters();
+        
     // Our controls.
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar.onDown.add(flipGravity);
-  }, 
-  update: function() {
-    game.physics.arcade.collide(player, platforms);//Collide player and ground
-    player.animations.play('right'); //Constantli "moving" to the right 
+    game.input.onDown.add(flipGravity);
 
-    //  Allow the player to jump if they are touching the ground.
-    // if (cursors.up.isDown && player.body.touching.down) {
-    //   player.body.velocity.y = -350;
-    // }
-  }, 
-  render: function() {
-    game.debug.cameraInfo(game.camera, 32, 32);
-    game.debug.spriteCoords(player, 32, 500);
-  }
-});
+    player.animations.play('right'); //Constantly "moving" to the right
+    timer(); // timer on
 
-function flipGravity() {
-  player.position.y += 10;
-  player.body.gravity.y = -player.body.gravity.y; 
-  // player.scale.y *= -1; // зеркально отобразить спрайт относительно y
+    //Loading
+    game.load.onLoadStart.add(console.log("Loading..."), this);
+    // game.load.onFileComplete.add(fileComplete);
+    game.load.onLoadComplete.add(console.log("Load cimplete"), this);
 }
 
-//  The platforms group contains the ground
-function createPlatforms() {
-  platforms = game.add.group();
-  //  We will enable physics for any object that is created in this group
-  platforms.enableBody = true;
-  // Here we create the ground.
-  var ground = platforms.create(0, game.world.height / 2, 'ground');
-  //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-  ground.scale.setTo(2, 1);
-  //  This stops it from falling away when you jump on it
-  ground.body.immovable = true;
+function UPDATE() {
+    game.physics.arcade.collide(player, platforms); //Collide player and ground
+    updateMonstersPerTick();
+    updateHistoPerTick();
+    counterText.text = counter; // counter of points
+    movingObjects(obj); // object's moving
+    histoGrow(5); // histo is growing when monster collides histo
 }
 
-// //  A simple background for our game
-function createSky() {
-  game.add.sprite(0, 0, 'sky');
+function RENDER() {
 }
 
-// The player and its settings
-function createPlayer() {
-  player = game.add.sprite(game.world.centerX - PLAYER_WIDTH / 2, 0, 'dino');
-  game.physics.arcade.enable(player); // We need to enable physics on the player
-  //  Player physics properties
-  player.body.bounce.y = 0;
-  player.body.gravity.y = 1000;
-  player.body.collideWorldBounds = true;
-
-  //  Our two animations, walking left and right.
-  player.animations.add('left', [4, 5, 6, 7], 10, true);
-  player.animations.add('right', [8, 9, 10, 11], 10, true);
-}
