@@ -19,19 +19,29 @@ function createPlayer() {
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = false;
     // player.body.immovable = true;
-    //  Animations, walking left and right.
-    player.animations.add('right', [0, 1, 2, 3], 10, true);
+    player.animations.add('right', [0, 1, 2, 3], 10, true); //  Animations, walking right.
 }
 
 function flipGravity() {
-  player.body.gravity.y = -player.body.gravity.y; 
-  var new_y = 0;
-  if (player.body.gravity.y > 0) {
-    new_y = ground.body.position.y - 25;
-  } else {
-    new_y = ground.body.position.y + 25;
-    player.anchor.setTo(0, 0.5);
-  }
-  player.reset(player.body.position.x, new_y);
-  player.scale.y *= -1; // зеркально отобразить спрайт относительно y
+    player.body.gravity.y *= -1; 
+    var new_y = 0;
+    if (player.body.gravity.y > 0) {
+        new_y = ground.body.position.y - 25;
+    } else {
+        new_y = ground.body.position.y + 25;
+        player.anchor.setTo(0, 0.5);
+    }
+    player.reset(player.body.position.x, new_y);
+    player.scale.y *= -1; // зеркально отобразить спрайт относительно y
+}
+
+function playerGrows(coeff) {
+    player.height = player.height*coeff;
+    player.width = player.width*coeff;
+    if (player.body.gravity.y > 0) {
+        player.body.y -= player.height*(coeff - 1);
+    }
+    else {
+        player.body.y += player.height*(coeff - 1);
+    }
 }

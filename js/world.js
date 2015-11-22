@@ -61,8 +61,8 @@ function movingObjects(obj) {
 
     for (var j = 1; j < 8; j ++)
     {
-            obj[j].body.velocity.set(-50 ,0);
-            obj[j + 7].body.velocity.set(-50 ,0);
+            obj[j].body.velocity.set(-80 ,0);
+            obj[j + 7].body.velocity.set(-80 ,0);
             if (obj[j].x < -100){
                 var n1 = getRandomInt(1,14);
                 obj[j] = objects.create(800 ,yDiff[j], 'obj' + n1);
