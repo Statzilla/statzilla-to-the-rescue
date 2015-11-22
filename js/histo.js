@@ -1,11 +1,11 @@
 ////////////////////////
-// Глобальные объедки //
+// Глобальные объекты //
 ////////////////////////
 var histo;
 var histos;
 var HISTOS_SPAWN_CHANCE = 1.0;
-var HISTOS_SPAWN_TRIAL_RATE = 100;
-var HISTOS_CHANCE_INCREASE_RATE = 0.02;
+var HISTOS_SPAWN_TRIAL_RATE = 512;
+var HISTO_WIDTH = 40;
 var histosSpawnTimer;
 
 function createHistos() {
@@ -13,27 +13,29 @@ function createHistos() {
     histoLayer = game.add.group();
     histoLayer.enableBody = true; 
 
-    // histosSpawnTimer = game.time.create(false);
-    // histosSpawnTimer.loop(HISTOS_SPAWN_TRIAL_RATE, 
-    //                       function() {
-    //                           HISTOS_SPAWN_CHANCE += HISTOS_CHANCE_INCREASE_RATE;
-    //                           if (Math.random() < HISTOS_SPAWN_CHANCE) {
-    //                               createHisto(game.world.width, LEVEL_SPEED);
-    //                               HISTOS_SPAWN_CHANCE = 0.0;
-    //                           }
-    //                       }, 
-    //                       this);
-    // histosSpawnTimer.start();
+    histosSpawnTimer = game.time.create(false);
+    histosSpawnTimer.loop(HISTOS_SPAWN_TRIAL_RATE, 
+                          function() {
+                              if (Math.random() < HISTOS_SPAWN_CHANCE) {
+                                  createHisto(game.world.width, LEVEL_SPEED);
+                              }
+                          }, 
+                          this);
+    histosSpawnTimer.start();
 
     
-    for (var i = 0; i < numberOfHistos; i++) {
-        var minCoordX = 50;
-        var maxCoordX = 150;
-        var randCoordX = 400 + i*200 + Math.floor(Math.random() * (maxCoordX - minCoordX + 1)) + minCoordX;
-        var speed = 200;
+    // for (var i = 0; i < numberOfHistos; i++) {
+    //     var minCoordX = 50;
+    //     var maxCoordX = 150;
+    //     var randCoordX = 400 + i*200 + Math.floor(Math.random() * (maxCoordX - minCoordX + 1)) + minCoordX;
+    //     var speed = 200;
         
-        createHisto(randCoordX, speed);
-    }
+    //     createHisto(randCoordX, speed);
+    // }
+}
+
+function stopSpawningHistos() {
+    histosSpawnTimer.destroy();
 }
 
 function createHisto(randCoordX, speed) {
@@ -76,14 +78,7 @@ function updateHistoPerTick() {
                 game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
                 counter = counter + item.height*10; // get points for kill histo
             } else {
-                sky = platforms.create(0, 0, 'ooops');
-                ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
-                timer.stop();
-                player.animations.stop(null, true);
-                histoLayer.forEach(function(item) {
-                    item.body.velocity.set(0, 0);
-                });
-                killAllMonstersAndPreventFromSpawning();
+                endGame();
             }  
         }
     });
@@ -95,11 +90,27 @@ function histoGrow(increase) {
             if (Phaser.Rectangle.intersects(monster.getBounds(), item.getBounds())) {
                 if (item.y < game.world.height / 2 && item.tint === monster.tint) {
                     item.height += increase;
-                    item.y -= - increase;
+                    item.y -= increase;
                     monster.die(monsterDeathAnimationBlink);
                 }
             }
         });
     });
+}
+
+function endGame() {
+    sky = platforms.create(0, 0, 'ooops');
+    ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
+    timer.stop();
+    player.animations.stop(null, true);
+    histoLayer.forEach(function(item) {
+        item.body.velocity.set(0, 0);
+    });
+    killAllMonstersAndPreventFromSpawning();
+    stopSpawningHistos();
+    $('#points').val(counter);
+    $('#points_show').html(counter);
+    $('#name').focus();
+    $('.form').fadeIn(100);
 }
 
