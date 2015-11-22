@@ -52,15 +52,29 @@ function createHisto(randCoordX, speed) {
 function updateHistoPerTick() {
 
     histoLayer.forEach(function(item) {
-
-        // game.physics.arcade.collide(player, item);
-        if (Phaser.Rectangle.intersects(player.getBounds(), item.getBounds())) {
+        var boundsHisto = item.getBounds();
+        var leftBoundHisto = new Phaser.Rectangle(boundsHisto.x, boundsHisto.y, 3, boundsHisto.height);
+             
+        if (Phaser.Rectangle.intersects(player.getBounds(), leftBoundHisto)) {
             if (item.height <= 50){
-                var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
                 item.body.velocity.set(500, plusOrMinus*500);
-                item.alpha = 1;
-                game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+                var disappearDelay = 1000;
+                var coordY = game.world.height / 2 - item.height;
+                var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+
+                game.add.tween(item).to({alpha: 0}, 1000,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
+                
                 counter = counter + item.height*10;
+                var plusText = game.add.bitmapText(player.x + player.width, coordY, 'carrier_command', 'plus', 6);
+                plusText.text = "+" + item.height*10;
+                // plusText.text.tint = 0xFFF700;
+                game.add.tween(plusText).to({alpha: 0}, disappearDelay,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
+                var timerplusText = game.time.create(false);
+                timerplusText.add(disappearDelay,
+                          function() { 
+                              plusText.destroy();
+                          });
+                timerplusText.start();
             } else {
                 var ooops = platforms.create(0, 0, 'ooops');
                 ooops.scale.setTo(1, 1);
@@ -68,7 +82,7 @@ function updateHistoPerTick() {
                 timer.stop();
                 player.animations.stop(null, true);
                 histoLayer.forEach(function(item) {
-                    item.body.velocity.set(0, 0);
+                item.body.velocity.set(0, 0);
                 });
             }  
         }
