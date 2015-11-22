@@ -1,18 +1,31 @@
 ////////////////////////
-// Глобальные объекты //
+// Глобальные объедки //
 ////////////////////////
 var histo;
 var histos;
-// var COLORS = [0x1abc9c, 0x2ecc71, 0x3498db, 0x9b59b6, 0xf1c40f, 0xe67e22, 0xe74c3c];
-var COLORS = [0x2ecc71, 0x3498db, 0x9b59b6, 0xf1c40f, 0xe74c3c];
-
-
+var HISTOS_SPAWN_CHANCE = 1.0;
+var HISTOS_SPAWN_TRIAL_RATE = 100;
+var HISTOS_CHANCE_INCREASE_RATE = 0.02;
+var histosSpawnTimer;
 
 function createHistos() {
     var numberOfHistos = 100;
     histoLayer = game.add.group();
     histoLayer.enableBody = true; 
 
+    // histosSpawnTimer = game.time.create(false);
+    // histosSpawnTimer.loop(HISTOS_SPAWN_TRIAL_RATE, 
+    //                       function() {
+    //                           HISTOS_SPAWN_CHANCE += HISTOS_CHANCE_INCREASE_RATE;
+    //                           if (Math.random() < HISTOS_SPAWN_CHANCE) {
+    //                               createHisto(game.world.width, LEVEL_SPEED);
+    //                               HISTOS_SPAWN_CHANCE = 0.0;
+    //                           }
+    //                       }, 
+    //                       this);
+    // histosSpawnTimer.start();
+
+    
     for (var i = 0; i < numberOfHistos; i++) {
         var minCoordX = 50;
         var maxCoordX = 150;
@@ -54,7 +67,6 @@ function createHisto(randCoordX, speed) {
 function updateHistoPerTick() {
 
     histoLayer.forEach(function(item) {
-
         // game.physics.arcade.collide(player, item);
         if (Phaser.Rectangle.intersects(player.getBounds(), item.getBounds())) {
             if (item.height <= 50){
