@@ -3,16 +3,26 @@
     <head> 
         <meta charset="UTF-8" />
         <title>Statzilla Game</title>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="js/phaser.min.js"></script>
         <script src="js/player.js"></script>
         <script src="js/world.js"></script>
         <script src="js/histo.js"></script>
         <script src="js/monsters.js"></script>
         <script src="js/counter.js"></script>
+        <script src="js/form.js"></script>
         <script src="js/main.js"></script>
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-
+        <div class="form">
+            <form>
+                <p id="title">Вы набрали <span id="points_show"></span> очков!<p>
+                <input id="name" type="text" placeholder="Введите ваше имя">
+                <input id="points" type="hidden" disabled >
+                <button class="button" id="push">Отправить рейтинг!</button>
+                <button class="button" id="restart">Переиграть!</button>
+            </form>
+        </div>
     </body>
 </html>
