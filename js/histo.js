@@ -107,6 +107,7 @@ function endGame() {
         item.body.velocity.set(0, 0);
     });
     killAllMonstersAndPreventFromSpawning();
+    stopSpawningHistos();
     $('#points').val(counter);
     $('#points_show').html(counter);
     $('#name').focus();
