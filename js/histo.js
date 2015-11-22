@@ -66,9 +66,25 @@ function updateHistoPerTick() {
                 ooops.scale.setTo(1, 1);
                 ooops.body.immovable = true;
                 timer.stop();
+                player.animations.stop(null, true);
+                histoLayer.forEach(function(item) {
+                    item.body.velocity.set(0, 0);
+                });
             }  
         }
     });
+}
 
+function histoGrow(increase) {
+    histoLayer.forEach(function(item) {
+        monsters.map( function(monster){
+            if (Phaser.Rectangle.intersects(monster.getBounds(), item.getBounds())) {
+                if (item.y < game.world.height / 2) {
+                    item.height = item.height + increase;
+                    item.y = item.y - increase;
+                }
+            }
+        });
+    });
 }
 

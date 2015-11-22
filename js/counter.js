@@ -1,10 +1,11 @@
 var counter = 0;
 var timeStep = 10;
 var counterText;
+var timer;
 
 
 function timer() {  
-    var timer = game.time.create(false);
+    timer = game.time.create(false);
     timer.loop(timeStep, updateCounter);
     timer.start();
 
