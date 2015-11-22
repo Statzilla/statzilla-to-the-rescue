@@ -18,6 +18,11 @@ function createMonsters() {
   monstersTimer.start();
 }
 
+function killAllMonstersAndPreventFromSpawning() {
+    monstersTimer.destroy();
+    monsters.map(function(monster) { monster.die(monsterDeathAnimationFall); });
+}
+
 function updateMonstersPerTick() {
   monsters.map( function(monster) { 
     if (!monster.dead) {
@@ -25,8 +30,6 @@ function updateMonstersPerTick() {
 
       game.physics.arcade.collide(monster, platforms);
       if (Phaser.Rectangle.intersects(player.getBounds(), monster.getBounds())) {
-        monster.dead = true;
-        monster.enableBody = false;
         var animation = (Math.random() < 0.5) ? monsterDeathAnimationSplat
                                               : monsterDeathAnimationFall;
         monster.die(animation);
@@ -72,8 +75,10 @@ function createMonster() {
 
   monster.dead = false;
   monster.die = function(animation) {
+    game.physics.arcade.collide(monster, platforms);
+    monster.dead = true;
+    monster.enableBody = false;
     this.body.velocity.x = 0;
-    this.dead.true;
     animation(this);
   };
   
