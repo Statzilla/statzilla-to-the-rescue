@@ -117,7 +117,7 @@ function histoGrow(increase) {
 function endGame() {
     
     var ooops = platforms.create(0, 0, 'ooops');
-    ooops.scale.setTo(1, 1);
+    // ooops.scale.setTo(0., 1);
     ooops.body.immovable = true;
     ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
     timer.stop();
