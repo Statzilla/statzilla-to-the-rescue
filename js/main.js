@@ -7,6 +7,7 @@ if ( /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent) ) {
 var game = new Phaser.Game(800, 600, Phasertype, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
 
 var music;
+var text;
 
 function PRELOAD() {
     game.load.image('sky', 'assets/back4.jpg');
@@ -15,7 +16,7 @@ function PRELOAD() {
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
     game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  
     game.load.image('ooops', 'assets/ooops.png');
-    game.load.audio('music', ['assets/music.mp3']);
+    // game.load.audio('music', ['assets/music.mp3']);
 
     for (var i = 1; i < 15; i++) {
         game.load.image('obj' + i, 'assets/obj' + i + '.png');
@@ -26,8 +27,8 @@ function PRELOAD() {
 function CREATE() {
     game.physics.startSystem(Phaser.Physics.ARCADE); //  We're going to be using physics, so enable the Arcade Physics system
 
-    music = game.add.audio('music');
-    music.play();
+    // music = game.add.audio('music');
+    // music.play();
 
     createWorld();
     createPlayer();
@@ -41,6 +42,11 @@ function CREATE() {
 
     player.animations.play('right'); //Constantly "moving" to the right
     timer(); // timer on
+
+    //Loading
+    game.load.onLoadStart.add(console.log("Loading..."), this);
+    // game.load.onFileComplete.add(fileComplete);
+    game.load.onLoadComplete.add(console.log("Load cimplete"), this);
 }
 
 function UPDATE() {
