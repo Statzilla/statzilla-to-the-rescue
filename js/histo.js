@@ -93,14 +93,7 @@ function updateHistoPerTick() {
                           });
                 timerplusText.start();
             } else {
-                var ooops = platforms.create(0, 0, 'ooops');
-                ooops.scale.setTo(1, 1);
-                ooops.body.immovable = true;
-                timer.stop();
-                player.animations.stop(null, true);
-                histoLayer.forEach(function(item) {
-                item.body.velocity.set(0, 0);
-                });
+                endGame();
             }  
         }
     });

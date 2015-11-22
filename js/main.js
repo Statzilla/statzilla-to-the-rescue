@@ -1,4 +1,10 @@
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
+if ( /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent) ) {
+    var Phasertype = 'Phaser.CANVAS';
+} else {
+    var Phasertype = 'Phaser.WEBGL';
+}
+
+var game = new Phaser.Game(800, 600, Phasertype, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
 
 function PRELOAD() {
     game.load.image('sky', 'assets/back4.jpg');
@@ -7,13 +13,11 @@ function PRELOAD() {
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
     game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  
     game.load.image('ooops', 'assets/ooops.png');
-
+    game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
     for (var i = 1; i < 15; i++) {
         game.load.image('obj' + i, 'assets/obj' + i + '.png');
     }
-
     game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
-
 }
 
 function CREATE() {
@@ -36,15 +40,10 @@ function CREATE() {
 function UPDATE() {
     game.physics.arcade.collide(player, platforms); //Collide player and ground
     updateMonstersPerTick();
-
     updateHistoPerTick();
     counterText.text = counter; // counter of points
     movingObjects(obj); // object's moving
-
-    // histoGrow(5); // histo is growing when monster collides histo
-
     histoGrow(5); // histo is growing when monster collides histo
-
 }
 
 function RENDER() {
