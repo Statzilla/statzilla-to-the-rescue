@@ -7,10 +7,13 @@ function PRELOAD() {
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
     game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  
     game.load.image('ooops', 'assets/ooops.png');
-    for (var i = 1; i < 9; i++) {
+
+    for (var i = 1; i < 15; i++) {
         game.load.image('obj' + i, 'assets/obj' + i + '.png');
     }
+
     game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
+
 }
 
 function CREATE() {
@@ -33,10 +36,15 @@ function CREATE() {
 function UPDATE() {
     game.physics.arcade.collide(player, platforms); //Collide player and ground
     updateMonstersPerTick();
+
     updateHistoPerTick();
     counterText.text = counter; // counter of points
     movingObjects(obj); // object's moving
+
+    // histoGrow(5); // histo is growing when monster collides histo
+
     histoGrow(5); // histo is growing when monster collides histo
+
 }
 
 function RENDER() {
