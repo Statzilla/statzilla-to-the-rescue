@@ -1,16 +1,11 @@
-function isiPhone(){
-    return (
-        //Detect iPhone
-        (navigator.platform.indexOf("iPhone") != -1) ||
-        //Detect iPod
-        (navigator.platform.indexOf("iPod") != -1)
-    );
+if( navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+){
+    var Phasertype = Phaser.CANVAS;
 }
-
-if (isiPhone()){
-    var Phasertype = 'Phaser.CANVAS';
-} else {
-    var Phasertype = 'Phaser.WEBGL';
+else {
+    var Phasertype = Phaser.WEBGL;
 }
 
 var game = new Phaser.Game(800, 600, Phasertype, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
