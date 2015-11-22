@@ -78,15 +78,7 @@ function updateHistoPerTick() {
                 game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
                 counter = counter + item.height*10; // get points for kill histo
             } else {
-                sky = platforms.create(0, 0, 'ooops');
-                ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
-                timer.stop();
-                stopSpawningHistos();
-                player.animations.stop(null, true);
-                histoLayer.forEach(function(item) {
-                    item.body.velocity.set(0, 0);
-                });
-                killAllMonstersAndPreventFromSpawning();
+                endGame();
             }  
         }
     });
@@ -98,11 +90,26 @@ function histoGrow(increase) {
             if (Phaser.Rectangle.intersects(monster.getBounds(), item.getBounds())) {
                 if (item.y < game.world.height / 2 && item.tint === monster.tint) {
                     item.height += increase;
-                    item.y -= - increase;
+                    item.y -= increase;
                     monster.die(monsterDeathAnimationBlink);
                 }
             }
         });
     });
+}
+
+function endGame() {
+    sky = platforms.create(0, 0, 'ooops');
+    ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
+    timer.stop();
+    player.animations.stop(null, true);
+    histoLayer.forEach(function(item) {
+        item.body.velocity.set(0, 0);
+    });
+    killAllMonstersAndPreventFromSpawning();
+    $('#points').val(counter);
+    $('#points_show').html(counter);
+    $('#name').focus();
+    $('.form').fadeIn(100);
 }
 

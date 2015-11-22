@@ -36,7 +36,7 @@ function UPDATE() {
     updateHistoPerTick();
     counterText.text = counter; // counter of points
     movingObjects(obj); // object's moving
-    // histoGrow(5); // histo is growing when monster collides histo
+    histoGrow(5); // histo is growing when monster collides histo
 }
 
 function RENDER() {
