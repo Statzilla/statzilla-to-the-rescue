@@ -33,6 +33,7 @@ function updateMonstersPerTick() {
         var animation = (Math.random() < 0.5) ? monsterDeathAnimationSplat
                                               : monsterDeathAnimationFall;
         monster.die(animation);
+        counter = counter + 50; // get points for kill monster
       }
     }
   });
@@ -52,6 +53,13 @@ function monsterDeathAnimationSplat(monster) {
 function monsterDeathAnimationFall(monster) {
     monster.body.velocity.x = MONSTER_KNOCK_OUT_POWER;
     monster.fadeoutAndDestroy(600);
+}
+
+function monsterDeathAnimationBlink(monster) {
+    monster.body.velocity.x = MONSTER_KNOCK_OUT_POWER;
+    var i = monsters.indexOf(monster);
+    monsters.splice(i, 1);
+    monster.destroy();
 }
 
 function createMonster() {

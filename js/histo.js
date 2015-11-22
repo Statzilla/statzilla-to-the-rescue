@@ -3,7 +3,9 @@
 ////////////////////////
 var histo;
 var histos;
-var COLORS = [0x1abc9c, 0x2ecc71, 0x3498db, 0x9b59b6, 0x16a085, 0x27ae60, 0x2980b9, 0x8e44ad, 0xf1c40f, 0xe67e22, 0xe74c3c, 0xf39c12, 0xd35400, 0xc0392b];
+// var COLORS = [0x1abc9c, 0x2ecc71, 0x3498db, 0x9b59b6, 0xf1c40f, 0xe67e22, 0xe74c3c];
+var COLORS = [0x2ecc71, 0x3498db, 0x9b59b6, 0xf1c40f, 0xe74c3c];
+
 
 
 function createHistos() {
@@ -60,16 +62,16 @@ function updateHistoPerTick() {
                 item.body.velocity.set(500, plusOrMinus*500);
                 item.alpha = 1;
                 game.add.tween(item).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
-                counter = counter + item.height*10;
+                counter = counter + item.height*10; // get points for kill histo
             } else {
-                var ooops = platforms.create(0, 0, 'ooops');
-                ooops.scale.setTo(1, 1);
-                ooops.body.immovable = true;
+                sky = platforms.create(0, 0, 'ooops');
+                ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
                 timer.stop();
                 player.animations.stop(null, true);
                 histoLayer.forEach(function(item) {
                     item.body.velocity.set(0, 0);
                 });
+                killAllMonstersAndPreventFromSpawning();
             }  
         }
     });
@@ -79,9 +81,10 @@ function histoGrow(increase) {
     histoLayer.forEach(function(item) {
         monsters.map( function(monster){
             if (Phaser.Rectangle.intersects(monster.getBounds(), item.getBounds())) {
-                if (item.y < game.world.height / 2) {
-                    item.height = item.height + increase;
-                    item.y = item.y - increase;
+                if (item.y < game.world.height / 2 && item.tint === monster.tint) {
+                    item.height += increase;
+                    item.y -= - increase;
+                    monster.die(monsterDeathAnimationBlink);
                 }
             }
         });
