@@ -1,0 +1,1 @@
+var LEVEL_SPEED = 200;

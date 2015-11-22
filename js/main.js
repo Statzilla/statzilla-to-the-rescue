@@ -5,7 +5,6 @@ function PRELOAD() {
     game.load.image('ground', 'assets/ox.png');
 
     game.load.image('histo', 'assets/histo.svg');
-    game.load.image('monster', 'assets/human.png');  
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
     game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  
     game.load.image('ooops', 'assets/ooops.png');

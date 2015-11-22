@@ -1,9 +1,13 @@
 ////////////////////////
-// Глобальные объекты //
+// Глобальные объедки //
 ////////////////////////
 var histo;
 var histos;
 var COLORS = [0x1abc9c, 0x2ecc71, 0x3498db, 0x9b59b6, 0x16a085, 0x27ae60, 0x2980b9, 0x8e44ad, 0xf1c40f, 0xe67e22, 0xe74c3c, 0xf39c12, 0xd35400, 0xc0392b];
+var HISTOS_SPAWN_CHANCE = 1.0;
+var HISTOS_SPAWN_TRIAL_RATE = 100;
+var HISTOS_CHANCE_INCREASE_RATE = 0.02;
+var histosSpawnTimer;
 
 
 function createHistos() {
@@ -11,6 +15,19 @@ function createHistos() {
     histoLayer = game.add.group();
     histoLayer.enableBody = true; 
 
+    // histosSpawnTimer = game.time.create(false);
+    // histosSpawnTimer.loop(HISTOS_SPAWN_TRIAL_RATE, 
+    //                       function() {
+    //                           HISTOS_SPAWN_CHANCE += HISTOS_CHANCE_INCREASE_RATE;
+    //                           if (Math.random() < HISTOS_SPAWN_CHANCE) {
+    //                               createHisto(game.world.width, LEVEL_SPEED);
+    //                               HISTOS_SPAWN_CHANCE = 0.0;
+    //                           }
+    //                       }, 
+    //                       this);
+    // histosSpawnTimer.start();
+
+    
     for (var i = 0; i < numberOfHistos; i++) {
         var minCoordX = 50;
         var maxCoordX = 150;
