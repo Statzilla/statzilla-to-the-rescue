@@ -3,12 +3,13 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', {preload: PRELOAD, creat
 function PRELOAD() {
     game.load.image('sky', 'assets/back4.jpg');
     game.load.image('ground', 'assets/ox.png');
+
     game.load.image('histo', 'assets/histo.svg');
     game.load.image('monster', 'assets/human.png');  
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
-    game.load.image('monster', 'assets/human.png');  
-    game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
+    game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  
     game.load.image('ooops', 'assets/ooops.png');
+    game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
     game.load.image('obj1', 'assets/obj1.png');
     game.load.image('obj2', 'assets/obj2.png');
     game.load.image('obj3', 'assets/obj3.png');
