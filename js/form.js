@@ -4,20 +4,16 @@ $(document).ready(function(){
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: '/rating/score',
+            url: '/game/rating/score.php',
             data:{
                 score: counter,
                 nickname: $('#name').val()
             },
             response:'text',//тип возвращаемого ответа text либо xml
             success:function (data) {//возвращаемый результат от сервера
-                if (data == 'ok') {
-                    window.location.href = "/rating";
-                } 
-                else {
-                    alert ('error')
-                }
+                window.location.href = "/game/rating";
             }
         });
+        window.location.href = "/game/rating";
     })
 })

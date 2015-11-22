@@ -33,6 +33,20 @@ function updateMonstersPerTick() {
                                               : monsterDeathAnimationFall;
         monster.die(animation);
         counter = counter + 50; // get points for kill monster
+        // Текст с очками за раздаваленного монстра
+        var plusText = 
+          game.add.bitmapText(player.x + player.width, player.y, 
+            'carrier_command', 'plus', 6);
+        plusText.text = "+" + 50;
+        // plusText.text.tint = 0xFFF700;
+        var disappearDelay = 1000;
+        game.add.tween(plusText).to({alpha: 0}, disappearDelay,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
+        var timerplusText = game.time.create(false);
+        timerplusText.add(disappearDelay,
+                  function() { 
+                      plusText.destroy();
+                  });
+        timerplusText.start();
       }
     }
   });
