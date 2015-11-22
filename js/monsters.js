@@ -6,6 +6,8 @@ var MONSTER_SPAWN_CHANCE = 0.11;
 var LEVEL_SPEED = 200;
 var MONSTER_SPAWN_HEIGHT = 32;
 var MONSTER_KNOCK_OUT_POWER = 64;
+var MONSTER_WIDTH = 10;
+var MONSTER_HEIGHT = 16;
 
 var monsters = new Array();
 var monstersTimer;
@@ -19,6 +21,8 @@ function createMonsters() {
 function updateMonstersPerTick() {
   monsters.map( function(monster) { 
     if (!monster.dead) {
+      monster.animations.play('runr'); 
+
       game.physics.arcade.collide(monster, platforms);
       if (Phaser.Rectangle.intersects(player.getBounds(), monster.getBounds())) {
         monster.dead = true;
@@ -32,8 +36,9 @@ function updateMonstersPerTick() {
 }
 
 function monsterDeathAnimationSplat(monster) {
-  monster.scale.y = 0.3;
-  monster.scale.x = 1.7;
+  monster.scale.y = 0.6;
+  monster.scale.x = 2;
+  monster.body.position.y += MONSTER_HEIGHT / 2;
   monster.body.velocity.x = -LEVEL_SPEED;
   monster.body.velocity.y = 0;
   monster.body.immovable = true;
@@ -54,6 +59,8 @@ function createMonster() {
   monster.body.bounce.y  = 0;
   monster.body.gravity.y = 1000;
   monster.moveDirection = true;
+  monster.scale.y = 0.6 + Math.random() * 0.8;
+  monster.animations.add('runr', [0, 1], 10, true);
   monster.tint = Math.floor(Math.random() * 0xFFFFFF); // should be profiled; possible performance drop
   monster.shouldChangeDirection = function() {
     // If player is close, monster will turn back from him

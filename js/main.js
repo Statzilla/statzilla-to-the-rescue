@@ -6,8 +6,7 @@ function PRELOAD() {
     game.load.image('histo', 'assets/histo.svg');
     game.load.image('monster', 'assets/human.png');  
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
-    game.load.image('monster', 'assets/human.png');  
-    game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
+    game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  
     game.load.image('ooops', 'assets/ooops.png');
 
     game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
