@@ -17,24 +17,21 @@ function createPlayer() {
     //  Player physics properties
     player.body.bounce.y = 0;
     player.body.gravity.y = 1000;
-    player.body.collideWorldBounds = true;
+    player.body.collideWorldBounds = false;
     // player.body.immovable = true;
     //  Animations, walking left and right.
     player.animations.add('right', [0, 1, 2, 3], 10, true);
 }
 
 function flipGravity() {
-  console.log("SPACEBAR pressed: gravity flip");
-  console.log("Y before gravity flip: " + player.body.position.y);
   player.body.gravity.y = -player.body.gravity.y; 
   var new_y = 0;
   if (player.body.gravity.y > 0) {
     new_y = ground.body.position.y - 25;
   } else {
     new_y = ground.body.position.y + 25;
-    player.anchor.setTo(0.5, 0.5);
+    player.anchor.setTo(0, 0.5);
   }
   player.reset(player.body.position.x, new_y);
-  console.log("Y after gravity flip: " + player.body.position.y);
   player.scale.y *= -1; // зеркально отобразить спрайт относительно y
 }
