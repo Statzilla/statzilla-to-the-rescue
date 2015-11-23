@@ -4,7 +4,7 @@
 
 We've built this HTML5 time-killer game during [47hous](http://47hours.org/) 
 hackathon to help users of [statzilla.ru](www.statzilla.ru) web services
-have a good time while their we cook their data.
+have a good time while we cook their data.
 
 ## Gameplay and controls
 
