@@ -1,37 +1,28 @@
-////////////////////////
-// Глобальные объекты //
-////////////////////////
 var histo;
-var histos;
-var HISTOS_SPAWN_CHANCE = 1.0;
-var HISTOS_SPAWN_TRIAL_RATE = 512;
-var HISTO_WIDTH = 40;
-var histosSpawnTimer;
 var histoLayer;
+var histosSpawnTimer;
 
 function createHistos() {
-    var numberOfHistos = 100;
     histoLayer = game.add.group();
     histoLayer.enableBody = true; 
 
     histosSpawnTimer = game.time.create(false);
     histosSpawnTimer.loop(HISTOS_SPAWN_TRIAL_RATE, 
-                          function() {
-                              if (Math.random() < HISTOS_SPAWN_CHANCE) {
-                                  createHisto(game.world.width, LEVEL_SPEED);
-                              }
-                              increaseLevelSpeed();
-                              histosSpawnTimer.events[0].delay = HISTOS_SPAWN_TRIAL_RATE + Math.floor(Math.random() * 500);
-                          }, 
-                          this);
+        function() {
+            if (Math.random() < HISTOS_SPAWN_CHANCE) {
+                createHisto(game.world.width, LEVEL_SPEED);
+            }
+            increaseLevelSpeed();
+            histosSpawnTimer.events[0].delay = HISTOS_SPAWN_TRIAL_RATE + Math.floor(Math.random() * 500);
+        }, this);
     histosSpawnTimer.start();
 }
 
 function increaseLevelSpeed() {
     LEVEL_SPEED += LEVEL_SPEED_INCREASE;
     histoLayer.forEach(function(histo) {
-         histo.body.velocity.x = -LEVEL_SPEED;
-      });
+        histo.body.velocity.x = -LEVEL_SPEED;
+    });
 }
 
 function stopSpawningHistos() {
@@ -40,9 +31,7 @@ function stopSpawningHistos() {
 }
 
 function createHisto(randCoordX, speed) {
-    var maxFloor = 5;
-    var minFloor = 1;
-    var randFloor = Math.floor(Math.random() * (maxFloor - minFloor + 1)) + minFloor;
+    var randFloor = Math.floor(Math.random() * (MAXFLOOR - MINFLOOR + 1)) + MINFLOOR;
 
     var randDirection = Math.floor(Math.random() * 2);
     var coordY = game.world.height / 2;
@@ -53,7 +42,6 @@ function createHisto(randCoordX, speed) {
         randCoordY = coordY - randFloor*20 - 2;
     }
 
-    var randColor = Math.floor(Math.random() * 7);
     var histo = histoLayer.create(randCoordX, randCoordY, 'histo');
     game.physics.arcade.enable(histo); 
     histo.scale.setTo(1, randFloor*2);
@@ -68,7 +56,6 @@ function createHisto(randCoordX, speed) {
 }
 
 function updateHistoPerTick() {
-
     histoLayer.forEach(function(item) {
         var boundsHisto = item.getBounds();
         var leftBoundHisto = new Phaser.Rectangle(boundsHisto.x, boundsHisto.y, 3, boundsHisto.height);
@@ -82,16 +69,17 @@ function updateHistoPerTick() {
 
                 game.add.tween(item).to({alpha: 0}, 1000,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
                 
-                counter = counter + item.height*10;
+                counter += item.height*10;
+
                 var plusText = game.add.bitmapText(player.x + player.width, coordY, 'carrier_command', 'plus', 6);
                 plusText.text = "+" + item.height*10;
-                // plusText.text.tint = 0xFFF700;
                 game.add.tween(plusText).to({alpha: 0}, disappearDelay,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
+                
                 var timerplusText = game.time.create(false);
                 timerplusText.add(disappearDelay,
-                          function() { 
-                              plusText.destroy();
-                          });
+                    function() { 
+                      plusText.destroy();
+                    });
                 timerplusText.start();
             } else {
                 endGame();
@@ -115,11 +103,10 @@ function histoGrow(increase) {
 }
 
 function endGame() {
-    
     var ooops = platforms.create(0, 0, 'ooops');
-    // ooops.scale.setTo(0., 1);
     ooops.body.immovable = true;
     ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
+
     timer.stop();
     player.animations.stop(null, true);
     histoLayer.forEach(function(item) {
@@ -127,6 +114,11 @@ function endGame() {
     });
     killAllMonstersAndPreventFromSpawning();
     stopSpawningHistos();
+
+    showRatingWindow();
+}
+
+function showRatingWindow() {
     $('#points').val(counter);
     $('#points_show').html(counter);
     $('#name').focus();

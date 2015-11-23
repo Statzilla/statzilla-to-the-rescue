@@ -1,15 +1,15 @@
-if( navigator.userAgent.match(/iPhone/i)
-    || navigator.userAgent.match(/iPad/i)
-    || navigator.userAgent.match(/iPod/i)
-){
-    var Phasertype = Phaser.CANVAS;
-}
-else {
-    var Phasertype = Phaser.WEBGL;
+function autoPhasertype(){
+    if (navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+    ) {
+        return Phaser.CANVAS;
+    } else {
+        return Phaser.WEBGL;
+    }
 }
 
-var game = new Phaser.Game(800, 600, Phasertype, '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
-
+var game = new Phaser.Game(WINDOW_WIDTH, WINDOW_HEIGHT, autoPhasertype(), '', {preload: PRELOAD, create: CREATE, update: UPDATE, render: RENDER});
 var music;
 var text;
 
@@ -23,7 +23,7 @@ function PRELOAD() {
     // game.load.audio('music', ['assets/music.mp3']);
 
     for (var i = 1; i < 15; i++) {
-        game.load.image('obj' + i, 'assets/obj' + i + '.png');
+        game.load.image('formula' + i, 'assets/formula' + i + '.png');
     }
     game.load.bitmapFont('carrier_command', 'assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
 }
@@ -36,21 +36,13 @@ function CREATE() {
 
     createWorld();
     createPlayer();
-    createHistos(); 
-    createMonsters();
+    createHistos();
+    createMonsters(); 
         
-    // Our controls.
-    spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spacebar.onDown.add(flipGravity);
-    game.input.onDown.add(flipGravity);
+    controlsOn();
 
     player.animations.play('right'); //Constantly "moving" to the right
     timer(); // timer on
-
-    //Loading
-    game.load.onLoadStart.add(console.log("Loading..."), this);
-    // game.load.onFileComplete.add(fileComplete);
-    game.load.onLoadComplete.add(console.log("Load cimplete"), this);
 }
 
 function UPDATE() {
@@ -58,8 +50,7 @@ function UPDATE() {
     updateMonstersPerTick();
     updateHistoPerTick();
     counterText.text = counter; // counter of points
-    movingObjects(obj); // object's moving
-    histoGrow(5); // histo is growing when monster collides histo
+    histoGrow(HISTO_GROWTH_HEIGHT); // histo is growing when monster collides histo
 }
 
 function RENDER() {
