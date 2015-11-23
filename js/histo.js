@@ -61,7 +61,7 @@ function updateHistoPerTick() {
         var leftBoundHisto = new Phaser.Rectangle(boundsHisto.x, boundsHisto.y, 3, boundsHisto.height);
              
         if (Phaser.Rectangle.intersects(player.getBounds(), leftBoundHisto)) {
-            if (item.height <= 50){
+            if (item.height <= player.body.height){
                 item.body.velocity.set(500, plusOrMinus*500);
                 var disappearDelay = 1000;
                 var coordY = game.world.height / 2 - item.height;
@@ -81,6 +81,7 @@ function updateHistoPerTick() {
                       plusText.destroy();
                     });
                 timerplusText.start();
+                growPlayer(PLAYER_GROW_FACTOR);
             } else {
                 endGame();
             }  
