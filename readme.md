@@ -1,5 +1,7 @@
 # Statzilla to the rescue! 
 
+![](assets/logo.jpg)
+
 We've built this HTML5 time-killer game during [47hous](http://47hours.org/) 
 hackathon to help users of [statzilla.ru](www.statzilla.ru) web services
 have a good time while their we cook their data.
@@ -11,6 +13,8 @@ avoid bars that are larger then he to survive.
 
 Statzilla may be flipped over coordinate axis with **spacebar** on PC or with 
 **tap** on mobile devices.
+
+![](assets/statzilla-to-the-rescue.png)
 
 ## Technology
 
