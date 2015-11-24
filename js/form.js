@@ -9,11 +9,11 @@ $(document).ready(function(){
                 score: counter,
                 nickname: $('#name').val()
             },
-            response:'text',
-            success:function (data) {
-                window.location.href = "/game/rating/#last";
+            success: function (data) {//возвращаемый результат от сервера
+                if (data.status === 1){
+                    window.location.href = "/game/rating/#last";
+                }
             }
         });
-        window.location.href = "/game/rating/#last";
     })
 })
