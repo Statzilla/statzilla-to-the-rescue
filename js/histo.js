@@ -56,12 +56,15 @@ function createHisto(randCoordX, speed) {
 }
 
 function updateHistoPerTick() {
+    
+   
     histoLayer.forEach(function(item) {
         var boundsHisto = item.getBounds();
         var leftBoundHisto = new Phaser.Rectangle(boundsHisto.x, boundsHisto.y, 3, boundsHisto.height);
              
         if (Phaser.Rectangle.intersects(player.getBounds(), leftBoundHisto)) {
             if (item.height <= player.body.height){
+                
                 item.body.velocity.set(500, plusOrMinus*500);
                 var disappearDelay = 1000;
                 var coordY = game.world.height / 2 - item.height;
@@ -74,16 +77,23 @@ function updateHistoPerTick() {
                 var plusText = game.add.bitmapText(player.x + player.width, coordY, 'carrier_command', 'plus', 6);
                 plusText.text = "+" + item.height*10;
                 game.add.tween(plusText).to({alpha: 0}, disappearDelay,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
-                
+
+                if (Math.floor(counter / 5000) > GROW_COUNTER){
+                    GROW_COUNTER = Math.floor(counter / 5000);
+                    growPlayer(PLAYER_GROW_FACTOR);
+                    console.log(GROW_COUNTER);
+                }
+
                 var timerplusText = game.time.create(false);
                 timerplusText.add(disappearDelay,
                     function() { 
                       plusText.destroy();
                     });
                 timerplusText.start();
-                growPlayer(PLAYER_GROW_FACTOR);
+                
+                
             } else {
-                endGame();
+                 endGame();
             }  
         }
     });
@@ -126,3 +136,17 @@ function showRatingWindow() {
     $('.form').fadeIn(100);
 }
 
+
+function createStars() {
+    var coordY = game.world.height / 2;
+    console.log(player.y - player.height);
+    // stars = game.add.sprite(player.x, player.y - player.height, 'stars');
+    stars = game.add.sprite(player.x + player.width/2, coordY - player.height - 20, 'stars');
+    // game.physics.arcade.enable(player); 
+
+    // var shine = stars.animations.add('shine');
+    // stars.animations.play('shine', 30, true);
+    stars.animations.add('shine', [0, 1], 3, true);
+    // player.animations.add('shine', [0, 1], 10, true); 
+
+}
