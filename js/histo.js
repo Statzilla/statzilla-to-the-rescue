@@ -78,10 +78,9 @@ function updateHistoPerTick() {
                 plusText.text = "+" + item.height*10;
                 game.add.tween(plusText).to({alpha: 0}, disappearDelay,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
 
-                if (Math.floor(counter / 5000) > GROW_COUNTER){
+                if ((Math.floor(counter / 5000) > GROW_COUNTER) & (Math.abs(player.height) < 120)){
                     GROW_COUNTER = Math.floor(counter / 5000);
                     growPlayer(PLAYER_GROW_FACTOR);
-                    console.log(GROW_COUNTER);
                 }
 
                 var timerplusText = game.time.create(false);
