@@ -14,8 +14,8 @@ var music;
 var text;
 
 function PRELOAD() {
-    game.load.image('sky', 'assets/nyback.png');
-    game.load.image('ground', 'assets/ox.png');
+    game.load.image('sky', 'assets/ny-back3.png');
+    game.load.image('ground', 'assets/ny-ground.png');
     game.load.image('histo', 'assets/histo.svg');
     game.load.spritesheet('dino', 'assets/dinosprite2.png', PLAYER_WIDTH, PLAYER_HEIGHT); 
     game.load.spritesheet('monster', 'assets/human.png', MONSTER_WIDTH, MONSTER_HEIGHT);  

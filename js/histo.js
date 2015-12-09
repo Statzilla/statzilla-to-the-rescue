@@ -34,7 +34,7 @@ function createHisto(randCoordX, speed) {
     var randFloor = Math.floor(Math.random() * (MAXFLOOR - MINFLOOR + 1)) + MINFLOOR;
 
     var randDirection = Math.floor(Math.random() * 2);
-    var coordY = game.world.height / 2;
+    var coordY = game.world.height / 2 + 100;
     var randCoordY;
     if (randDirection === 0) {
         randCoordY = coordY + 1;
@@ -67,7 +67,7 @@ function updateHistoPerTick() {
                 
                 item.body.velocity.set(500, plusOrMinus*500);
                 var disappearDelay = 1000;
-                var coordY = game.world.height / 2 - item.height;
+                var coordY = game.world.height / 2 + 100 - item.height;
                 var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 
                 game.add.tween(item).to({alpha: 0}, 1000,  Phaser.Easing.Linear.None,  true,  0,  1000,  true);
@@ -102,7 +102,7 @@ function histoGrow(increase) {
     histoLayer.forEach(function(item) {
         monsters.map( function(monster){
             if (Phaser.Rectangle.intersects(monster.getBounds(), item.getBounds())) {
-                if (item.y < game.world.height / 2 && item.tint === monster.tint) {
+                if (item.y < game.world.height / 2 + 100 && item.tint === monster.tint) {
                     item.height += increase;
                     item.y -= increase;
                     monster.die(monsterDeathAnimationBlink);
@@ -115,7 +115,7 @@ function histoGrow(increase) {
 function endGame() {
     var ooops = platforms.create(0, 0, 'ooops');
     ooops.body.immovable = true;
-    ground = platforms.create(0, game.world.height / 2 - 10, 'ground');
+    ground = platforms.create(0, game.world.height / 2 + 100 - 10, 'ground');
 
     timer.stop();
     player.animations.stop(null, true);
@@ -137,7 +137,7 @@ function showRatingWindow() {
 
 
 function createStars() {
-    var coordY = game.world.height / 2;
+    var coordY = game.world.height / 2 + 100;
     console.log(player.y - player.height);
     // stars = game.add.sprite(player.x, player.y - player.height, 'stars');
     stars = game.add.sprite(player.x + player.width/2, coordY - player.height - 20, 'stars');

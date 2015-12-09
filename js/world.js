@@ -15,7 +15,7 @@ function createWorld() {
     sky.scale.setTo(1, 1);
     sky.body.immovable = true;
 
-    ground = platforms.create(0, game.world.height / 2, 'ground'); // Here we create the ground. 
+    ground = platforms.create(0, game.world.height / 2 + 100, 'ground'); // Here we create the ground. 
     ground.scale.setTo(1, 1); //  Scale it to fit the width of the game 
     ground.body.immovable = true; //  This stops it from falling away when you jump on it
     ground.body.setSize(WINDOW_WIDTH, 1);
@@ -36,7 +36,7 @@ function createWorld() {
     }
     moveFormulas(formula);
 
-    leftWall = game.add.sprite(0, game.world.height / 2, 'ground');
+    leftWall = game.add.sprite(0, game.world.height / 2 + 100, 'ground');
     leftWall.scale.setTo(10, 0.1);
 }
 
