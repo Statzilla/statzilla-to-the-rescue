@@ -2,7 +2,7 @@ var player;
 
 // The player and its settings
 function createPlayer() {
-    player = game.add.sprite(0, 0, 'dino');
+    player = game.add.sprite(30, 0, 'dino');
     game.physics.arcade.enable(player); // enable physics on the player
 
     //  Player physics properties
@@ -17,9 +17,9 @@ function flipGravity() {
 
     var new_y = 0;
     if (player.body.gravity.y > 0) {
-        new_y = ground.body.position.y - 25;
+        new_y = ground.body.position.y - player.body.height / 2;
     } else {
-        new_y = ground.body.position.y + 25;
+        new_y = ground.body.position.y + player.body.height / 2;
         player.anchor.setTo(0, 0.5);
     }
     player.reset(player.body.position.x, new_y);
@@ -32,4 +32,11 @@ function controlsOn() {
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar.onDown.add(flipGravity);
     game.input.onDown.add(flipGravity);
+}
+
+function growPlayer(factor) {
+  // player.reset(player.body.x + 100, player.body.y);
+  player.scale.x *= factor;
+  player.scale.y *= factor;
+  // player.scale.setTo(1, 1);
 }
